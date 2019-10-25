@@ -22,7 +22,6 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsc",
-    "dev": "yarn build && lambda-local -l ./dist/index.js -e ./dist/mock-events/default -h stuffGet",
     "lint": "eslint --ext=.ts src",
     "test": "jest",
     "test:lambda": "yarn build && lambda-local -l ./dist/index.js -e ./dist/mock-events/default -h stuffGet"
