@@ -5,7 +5,7 @@ describe('stuff-get handler', () => {
     const response = await handler()
     expect(response).toMatchObject({
       statusCode: 200,
-      body: 'hi!',
+      body: 'Hi!',
     })
   })
 })
