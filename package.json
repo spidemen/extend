@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "@types/jest": "^24.0.19",
+    "@types/node": "^12.11.5",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "aws-lambda": "^0.1.2",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
+    "lambda-local": "^1.6.3",
+    "node-fetch": "^2.6.0",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.4"
+  },
+  "description": "Basic scaffold to run Lambda functions",
+  "name": "lambda-scaffold",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "tsc",
+    "dev": "yarn build && lambda-local -l ./dist/index.js -e ./dist/mock-events/default -h stuffGet",
+    "lint": "eslint --ext=.ts src",
+    "test": "jest",
+    "test:lambda": "yarn build && lambda-local -l ./dist/index.js -e ./dist/mock-events/default -h stuffGet"
+  },
+  "version": "1.0.0"
+}
