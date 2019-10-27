@@ -8,18 +8,19 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "outDir": "./dist",
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "strictNullChecks": true,
     "strictPropertyInitialization": false,
     "target": "ES2017",
     "typeRoots": [
       "node_modules/@types",
       "@types"
-    ]
+    ],
+    "types": ["jest", "node"]
   },
   "exclude": ["node_modules", "dist", "**/*.test.*"]
 }

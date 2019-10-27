@@ -1,3 +1,10 @@
+#  Description 
+- simple to get all breeds, just rum
+   yarn test:fetch
+- run test cases: 
+   yarn test
+
+
 # The Extend Challenge
 
 This is bare-bones version of our backend codebase, where we ask candidates to make a small contribution. The goal: give both the candidate and the Extend team a chance to interact on a realistic, but limited (shooting for just a few hours), task. We see this as a two-way evaluation, for the team and the candidate to decide if its a good fit.
