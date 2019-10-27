@@ -27,7 +27,7 @@
   breed-get.test.ts     test file: there lots of test case for above two functions:   
    1.  fetchhandler()  timeout test, fetch timout test, happy path or bad path test, etc   
    2.  handlebreed ()  all above three cases, and empty test case and some corn test cases.. all those test case done in local  without internet  connection, use identical test data    
-   test data format  is the same as the one gets from API call    
+   3.  implememt jest-fetch-mock to mock fetch API call locally, rewrite almost all test cases by using jest-fetch-mock...         
     
 # The Extend Challenge
 

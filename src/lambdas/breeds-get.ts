@@ -1,12 +1,15 @@
-const fetch = require('node-fetch');
+
 import { Response } from './types'
+//const fetch = require('jest-fetch-mock');  // use for test
+//var fetch = require('node-fetch');   // develop and proudction
+var fetch: any;
 
 export class FetchHandler {
     url: string;
     context: any;
     callback: any;
     timeout: number;
-    constructor(url: string, timeout?: number, context?: any, callback?: any) {
+    constructor(url: string, timeout?: number, test?: boolean, context?: any, callback?: any) {
         this.url = url;
         this.context = context;
         this.callback = callback;
@@ -14,10 +17,15 @@ export class FetchHandler {
             this.timeout = 2900;   // default lambda timeout 3000, 2900 for fetch request
         else
             this.timeout = timeout - 100;
+
+        if (test != undefined && test)
+            fetch = require('jest-fetch-mock');  // test environment
+        else {
+            fetch = require('node-fetch'); // production
+        }
     }
 
     public async fetchhandler(): Promise<Response> {   // hanle API call and get data from server
-
 
         let statusCode = 499;
         let res = new Set();
