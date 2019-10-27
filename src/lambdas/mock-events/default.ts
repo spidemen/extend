@@ -1,5 +1,6 @@
 //export {}
 // Sample event data
 module.exports = {
-    url: 'https://dog.ceo/api/breeds/list/all'
+    url: 'https://dog.ceo/api/breeds/list/all',
+    timeout:3000,
 };

@@ -3,11 +3,12 @@ const chai = require('chai')
 const should = chai.should()
 const fetchMock = require('fetch-mock');
 const fetch = require('node-fetch');
-
 let url = 'https://dog.ceo/api/breeds/list/all';
-describe('breeds-get fetchhandler', () => {
+
+describe('breeds-get FetchHandler', () => {
 
     let hanlderBreed = new FetchHandler(url);
+    //let  hanlderBreed = new FetchHandler(event.url,context,callback);
     let res = new Set();
     it('should exist test', () => { // A good starting point
         should.exist(FetchHandler)
@@ -20,28 +21,26 @@ describe('breeds-get fetchhandler', () => {
     });
 
     it('wrong url test', async () => {
-        let fetchhandler = new FetchHandler(url + "wrong");
-        const result = await fetchhandler.fetchhandler();
+        let fetchhandlertmp = new FetchHandler(url + "wrong", 3000);
+        const result = await fetchhandlertmp.fetchhandler();
         expect(result.statusCode).toEqual(404);  // 404 not found
         expect(result.body.length).toEqual(1);   // length 1 just store error message 
     });
 
     it('API call size data test', async () => {
+        let hanlderBreed = new FetchHandler(url);
         const result = await hanlderBreed.fetchhandler();
         expect(result.statusCode).toEqual(200);  // 200 success
-        expect(result.body.length).toEqual(135);   // expect total breeds
+        expect(result.body.length).toEqual(135);   // expect total breeds combination
     });
 
-    it('lambda timeout test', async () => {
+    it('fetch timeout test', async () => {
         let result: any;
-        for (let i = 0; i < 5; i++) {
-            result = hanlderBreed.fetchhandler();
-        }
-        setTimeout(() => {  // FIXME: not working , not execute inside code
-            //  console.log(result.statusCode);
-            expect(result.statusCode).toEqual(undefined);  // 404 not found timeout success
-            //  expect(result.body.length).toEqual(1);   // expect total breeds
-        }, 3000);
+        let hanlderBreedtimeout = new FetchHandler(url, 300);  // too short time, which cannot complete fetch API get  
+        result = await hanlderBreedtimeout.fetchhandler();
+        expect(result.statusCode).toEqual(499);  // 499 fetch timeout
+        //  expect(result.body.length).toEqual(1);   // expect total breeds
+
     });
     it('concat breed test', () => {  // local test without internet connection
         //  ex: {A:[],B,[]}-->[A,B]
@@ -61,7 +60,7 @@ describe('breeds-get fetchhandler', () => {
         expect(Array.from(res.values())).toEqual(expected);
     });
 
-    // it('duplicate breed test',  () => { // local test without internet connection  //JSON object no duplicate 
+    // it('duplicate breed test',  () => { // local test without internet connection  //JSON object no duplicate key
     //     //  ex: {A:[],B,[]}-->[A,B]
     //     let input = { sheep: ['lion', 'shark'], cat: ['dog'],cat:[dog]};
     //     res.clear();
@@ -72,7 +71,7 @@ describe('breeds-get fetchhandler', () => {
 
 
     it('embedded subbreed test 1', () => { // local test without internet connection
-        //  ex: {A:[],B,[]}-->[A,B]
+        
         let input = { sheep: [{ lion: ['dog', 'cat'] }, 'shark'], cat: [] };
         res.clear();
         let expected = ['dog lion sheep', 'cat lion sheep', 'shark sheep', 'cat'];
@@ -81,7 +80,7 @@ describe('breeds-get fetchhandler', () => {
     });
 
     it('mulitple embedded subbreed test 2 ', () => { // local test without internet connection
-        //  ex: {A:[],B,[]}-->[A,B]
+      
         let input = { sheep: [{ lion: [{ cat: ['wolf'] }, 'dog', 'cat'] }, 'shark'], cat: [] };
         res.clear();
         let expected = ['wolf cat lion sheep', 'dog lion sheep', 'cat lion sheep', 'shark sheep', 'cat'];
