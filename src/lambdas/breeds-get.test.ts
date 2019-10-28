@@ -8,15 +8,11 @@ jest.setMock('node-fetch', fetch);
 let url = 'https://dog.ceo/api/breeds/list/all';
 describe('breeds-get FetchHandler', () => {
 
-
     let hanlderBreed = new FetchHandler(url, 3000, false);  // set test enviroment
     // let  hanlderBreed = new FetchHandler(event.url,context,callback);
-    let res = new Set();
     it('should exist test', () => { // A good starting point
         should.exist(FetchHandler)
     })
-
-
 
     beforeEach(() => {
         fetch.resetMocks()
@@ -32,7 +28,6 @@ describe('breeds-get FetchHandler', () => {
         let fetchhandlertmp = new FetchHandler(url + "wrong", 3000);
         fetch.mockResponseOnce(JSON.stringify({ status: 'fail', message: {} }), { status: 404 })
         const result = await fetchhandlertmp.fetchhandler();
-        console.log(result);
         expect(result.statusCode).toEqual(404);  // 404 not found
         expect(result.body.length).toEqual(1);   // length 1 just store error message 
     });
@@ -56,7 +51,6 @@ describe('breeds-get FetchHandler', () => {
 
         try {
             result = await hanlderBreedtimeout.fetchhandler();
-            console.log(result);
             expect(result.statusCode).toEqual(200);  // 499 fetch timeout
             expect(result.body.length).toEqual(0);   // expect total breeds
         } catch (e) {
@@ -135,85 +129,23 @@ describe('breeds-get FetchHandler', () => {
         expect(result.statusCode).toEqual(200);
     });
 
-
-    // test hanlderBreed class
-    const fetchhandler = jest.fn();
-    jest.mock('./breeds-get', () => {
-        return jest.fn().mockImplementation(() => {
-            return { fetchhanlders: FetchHandler };
-        });
-    });
-
-    beforeEach(() => {
-        // Clear all instances and calls to constructor and all methods:
-        fetchhandler.mockClear();
-    });
-
-    it('check contructor create??', () => {
-        const hanlde = new FetchHandler(url);
-        // Ensure constructor created the object
-        expect(fetchhandler).toBeTruthy();
-    });
-
-    // it('concat single breed test', () => {  // local test without internet connection
-    //     //  ex: {A:[],B,[]}-->[A,B]
-    //     let input = { sheep: [], cat: [], dog: [] };
-    //     res.clear();
-    //     let expected = ['sheep', 'cat', 'dog'];
-    //     hanlderBreed.handlebreed(input, res);
-    //     expect(Array.from(res.values())).toEqual(expected);
+    // // test hanlderBreed class
+    // const fetchhandler = jest.fn();
+    // jest.mock('./breeds-get', () => {
+    //     return jest.fn().mockImplementation(() => {
+    //         return { fetchhanlders: FetchHandler };
+    //     });
     // });
 
-    // it('concat subbreed test', () => { // local test without internet connection
-    //     //  ex: {A:[],B,[]}-->[A,B]
-    //     let input = { sheep: ['lion', 'shark'], cat: [], dog: ['ox', 'wolf'] };
-    //     res.clear();
-    //     let expected = ['lion sheep', 'shark sheep', 'cat', 'ox dog', 'wolf dog'];
-    //     hanlderBreed.handlebreed(input, res);
-    //     expect(Array.from(res.values())).toEqual(expected);
+    // beforeEach(() => {
+    //     // Clear all instances and calls to constructor and all methods:
+    //     fetchhandler.mockClear();
     // });
 
-    // // it('duplicate breed test',  () => { // local test without internet connection  //JSON object no duplicate key
-    // //     //  ex: {A:[],B,[]}-->[A,B]
-    // //     let input = { sheep: ['lion', 'shark'], cat: ['dog'],cat:[dog]};
-    // //     res.clear();
-    // //     let expected = ['lion sheep', 'shark sheep', 'cat'];
-    // //     hanlderBreed.handlebreed(input, res);
-    // //     expect(Array.from(res.values())).toEqual(expected);  
-    // // });
-
-    // it('embedded subbreed test 1', () => { // local test without internet connection
-
-    //     let input = { sheep: [{ lion: ['dog', 'cat'] }, 'shark'], cat: [] };
-    //     res.clear();
-    //     let expected = ['dog lion sheep', 'cat lion sheep', 'shark sheep', 'cat'];
-    //     hanlderBreed.handlebreed(input, res);
-    //     expect(Array.from(res.values())).toEqual(expected);
-    // });
-
-    // it('mulitple embedded subbreed test 2 ', () => { // local test without internet connection
-
-    //     let input = { sheep: [{ lion: [{ cat: ['wolf'] }, 'dog', 'cat'] }, 'shark'], cat: [] };
-    //     res.clear();
-    //     let expected = ['wolf cat lion sheep', 'dog lion sheep', 'cat lion sheep', 'shark sheep', 'cat'];
-    //     hanlderBreed.handlebreed(input, res);
-    //     expect(Array.from(res.values())).toEqual(expected);
-    // });
-
-    // it('empty input test', () => { // local test without internet connection
-    //     let input = {};
-    //     res.clear();
-    //     let expected: string[] = [];
-    //     hanlderBreed.handlebreed(input, res);
-    //     expect(Array.from(res.values())).toEqual(expected);
-    // });
-
-    // it('wrong  formate input test', () => { // local test without internet connection
-    //     let input = 'sheep cat';
-    //     res.clear();
-    //     let expected: string[] = [];
-    //     hanlderBreed.handlebreed(input, res);
-    //     expect(Array.from(res.values())).toEqual(expected);
+    // it('check contructor create??', () => {
+    //     const hanlde = new FetchHandler(url);
+    //     // Ensure constructor created the object
+    //     expect(fetchhandler).toBeTruthy();
     // });
 
 })

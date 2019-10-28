@@ -41,7 +41,7 @@ export class FetchHandler {
                 return resp.json();
             }).then((body: any) => {
                 if (body.status != 'success') {
-                    console.log("error get data from " + this.url);
+                  //  console.log("error get data from " + this.url);
                 } else {
                     if (this.context != undefined) {
                         console.log('Remaining time: ', this.context.getRemainingTimeInMillis());
@@ -68,7 +68,7 @@ export class FetchHandler {
     }
     public handlebreed(message: any, res: any) {     // handle how to concat breed and subbreeds
         if (typeof message != 'object' || !this.isJson(message)) {
-            console.log('wrong input type, not json ');
+           // console.log('wrong input type, not json ');
             return;
         }
         for (let prop in message) {
