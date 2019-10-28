@@ -5,8 +5,4 @@ module.exports = {
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleFileExtensions: ['ts', 'json', 'js'],
-  setupFiles: [
-    "./setupJest.ts"
-    ],
-  automock: false
 }
