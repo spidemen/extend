@@ -3,8 +3,10 @@
 1.  git clone https://github.com/spidemen/extend.git   
 2.  run command: 
 ```bash  
-    cd extend/lambda-scaffold  
-    yarn  
+    cd extend/lambda-scaffold    
+    git fetch --all      
+    git checkout develop   
+    yarn   
   ```   
 - simple to get all breeds, just rum    
 ```bash
