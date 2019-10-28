@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@types/chai": "^4.2.4",
     "@types/fetch-mock": "^7.3.1",
     "@types/jest": "^24.0.20",
     "@types/node": "^12.11.5",
@@ -30,8 +31,8 @@
     "build": "tsc",
     "lint": "eslint --ext=.ts src",
     "test": "jest",
-    "test:lambda": "yarn build && lambda-local -l ./dist/index.js -e ./dist/mock-events/default -h stuffGet",
-    "test:fetch": "yarn build && lambda-local -l ./dist/index.js -e ./dist/mock-events/default -h fetchGet"
+    "test:lambda": "yarn build && lambda-local -l ./dist/src/lambdas/index.js -e ./dist/src/lambdas/mock-events/default -h stuffGet",
+    "test:fetch": "yarn build && lambda-local -l ./dist/src/lambdas/index.js -e ./dist/src/lambdas/mock-events/default -h fetchGet"
   },
   "version": "1.0.0",
   "devDependencies": {
