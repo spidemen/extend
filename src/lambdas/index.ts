@@ -1,5 +1,7 @@
 import { FetchHandler } from './breeds-get'
+
 import { EventType } from './types'
+
 exports.fetchGet = async function(event: EventType) {
   //  context.callbackWaitsForEmptyEventLoop = false
   const fetchhandler = new FetchHandler(event.url, event.timeout)

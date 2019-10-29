@@ -16,4 +16,3 @@ export interface LamdbasType {
   context: Context
   callback: any
 }
-
