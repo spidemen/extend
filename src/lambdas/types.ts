@@ -4,7 +4,7 @@ import { Context } from 'vm'
 
 export interface Response {
   statusCode: number
-  body?: any
+  // body?: any
 }
 
 export interface EventType {
@@ -13,6 +13,6 @@ export interface EventType {
 }
 
 export interface LamdbasType {
-  context: Context
-  callback: any
+  context?: Context
+  // callback: any
 }

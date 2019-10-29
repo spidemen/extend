@@ -1,10 +1,12 @@
+import { Context } from 'vm'
 import { FetchHandler } from './breeds-get'
 
-import { EventType } from './types'
+import { EventType, LamdbasType } from './types'
 
-exports.fetchGet = async function(event: EventType) {
+exports.fetchGet = async function(event: EventType, context: Context) {
   //  context.callbackWaitsForEmptyEventLoop = false
-  const fetchhandler = new FetchHandler(event.url, event.timeout)
+  const contextParam: LamdbasType = { context }
+  const fetchhandler = new FetchHandler(event.url, event.timeout, contextParam)
   const response = await fetchhandler.fetchhandler()
   return response
 }

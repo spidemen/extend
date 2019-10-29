@@ -1,18 +1,18 @@
 import fetch from 'node-fetch'
-import { Response } from './types'
+import { Response, LamdbasType } from './types'
 
 export class FetchHandler {
   url: string
 
-  // context: any
+  context: any
 
   // callback: any
 
   timeout: number
 
-  constructor(url: string, timeouts?: number) {
+  constructor(url: string, timeouts?: number, context?: LamdbasType) {
     this.url = url
-    // this.context = context
+    this.context = context
     // this.callback = callback
     if (timeouts === undefined) this.timeout = 2900
     // default lambda timeout 3000, 2900 for fetch request
@@ -24,9 +24,9 @@ export class FetchHandler {
 
     let statuscode = 499
     const res = new Set()
-    // if (this.context !== undefined) {
-    //   this.context.callbackWaitsForEmptyEventLoop = false
-    // }
+    if (this.context !== undefined) {
+      this.context.context.callbackWaitsForEmptyEventLoop = false
+    }
     await fetch(this.url, { method: 'GET', timeout: this.timeout })
       .then((resp: any) => {
         statuscode = resp.status
@@ -38,17 +38,19 @@ export class FetchHandler {
       .then((body: any) => {
         if (body.status !== 'success') {
           // console.log("error get data from " + this.url+"  "+body.status);
+        } else if (this.context !== undefined) {
+          console.log('Remaining time: ', this.context.context.getRemainingTimeInMillis())
+          if (this.context.context.getRemainingTimeInMillis() < 500) {
+            // this.callback({
+            //   statuscode: 504,
+            //   body: ['timeout error, server busy, please try again'],
+            // })
+            statuscode = 504
+            throw new Error('timeout error, server busy, please try again')
+          }
         } else {
-          // if (this.context !== undefined) {
-          //   console.log('Remaining time: ', this.context.getRemainingTimeInMillis())
-          //   if (this.context.getRemainingTimeInMillis() < 500) {
-          //     this.callback({
-          //       statuscode: 504,
-          //       body: ['timeout error, server busy, please try again'],
-          //     })
-          //   }
-          // }
-          this.handlebreed(body.message, res) // address json data
+          // address json data
+          this.handlebreed(body.message, res)
         }
       })
       .catch((err: any) => {
@@ -59,11 +61,13 @@ export class FetchHandler {
 
     return {
       statusCode: statuscode,
-      body: Array.from(res.values()),
+      //  body: Array.from(res.values()),  // paul make a change, no need for body
     }
   }
 
-  static isJson(str: any): boolean {
+  private static isJson(str: any): boolean {
+    // this is a private function, not expose to public, not worry about any type
+    // just only be used within this class
     // check json type
     let tmp: any
     if (typeof str !== 'string') tmp = JSON.stringify(str)
@@ -75,7 +79,9 @@ export class FetchHandler {
     return true
   }
 
-  public handlebreed(message: JSON, res: any) {
+  private handlebreed(message: JSON, res: any) {
+    // this is a private function, not expose to public, not worry about any type
+    // just only be used within this class
     // handle how to concat breed and subbreeds
     if (typeof message !== 'object' || !FetchHandler.isJson(message)) {
       // console.log('wrong input type, not json ');
