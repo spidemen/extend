@@ -28,7 +28,7 @@
 
   breed-get.test.ts     test file: there lots of test case for above two functions:   
    1.  fetchhandler()  timeout test, fetch timout test, happy path or bad path test, etc   
-   2.  implememt jest-fetch-mock to mock fetch API call locally and then test  fetchhandler()  functions with lots of different cases  like  single breed   subbreeds  
+   2.  implememt nock to mock fetch API call locally and then test  fetchhandler()  functions with lots of different cases  like  single breed   subbreeds  
     empty and incorrect input data and so on.   
     
 # The Extend Challenge
