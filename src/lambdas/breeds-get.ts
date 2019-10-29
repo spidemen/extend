@@ -4,16 +4,16 @@ import { Response } from './types'
 export class FetchHandler {
   url: string
 
-  context: any
+  // context: any
 
-  callback: any
+  // callback: any
 
   timeout: number
 
-  constructor(url: string, timeouts?: number, context?: any, callback?: any) {
+  constructor(url: string, timeouts?: number) {
     this.url = url
-    this.context = context
-    this.callback = callback
+    // this.context = context
+    // this.callback = callback
     if (timeouts === undefined) this.timeout = 2900
     // default lambda timeout 3000, 2900 for fetch request
     else this.timeout = timeouts - 100
@@ -24,9 +24,9 @@ export class FetchHandler {
 
     let statuscode = 499
     const res = new Set()
-    if (this.context !== undefined) {
-      this.context.callbackWaitsForEmptyEventLoop = false
-    }
+    // if (this.context !== undefined) {
+    //   this.context.callbackWaitsForEmptyEventLoop = false
+    // }
     await fetch(this.url, { method: 'GET', timeout: this.timeout })
       .then((resp: any) => {
         statuscode = resp.status
@@ -39,15 +39,15 @@ export class FetchHandler {
         if (body.status !== 'success') {
           // console.log("error get data from " + this.url+"  "+body.status);
         } else {
-          if (this.context !== undefined) {
-            console.log('Remaining time: ', this.context.getRemainingTimeInMillis())
-            if (this.context.getRemainingTimeInMillis() < 500) {
-              this.callback({
-                statuscode: 504,
-                body: ['timeout error, server busy, please try again'],
-              })
-            }
-          }
+          // if (this.context !== undefined) {
+          //   console.log('Remaining time: ', this.context.getRemainingTimeInMillis())
+          //   if (this.context.getRemainingTimeInMillis() < 500) {
+          //     this.callback({
+          //       statuscode: 504,
+          //       body: ['timeout error, server busy, please try again'],
+          //     })
+          //   }
+          // }
           this.handlebreed(body.message, res) // address json data
         }
       })
@@ -75,7 +75,7 @@ export class FetchHandler {
     return true
   }
 
-  public handlebreed(message: any, res: any) {
+  public handlebreed(message: JSON, res: any) {
     // handle how to concat breed and subbreeds
     if (typeof message !== 'object' || !FetchHandler.isJson(message)) {
       // console.log('wrong input type, not json ');
