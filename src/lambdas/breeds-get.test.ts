@@ -67,7 +67,7 @@ describe('breeds-get FetchHandler', () => {
     const expected: string[] = []
     const result = await hanlderBreed.fetchhandler()
     expect(result.statusCode).toEqual(200)
-    // expect(result.body).toEqual(expected)
+    expect(result.body).toEqual(expected)
   })
 
   it('concat single breed test', async () => {
