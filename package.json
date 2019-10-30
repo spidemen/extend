@@ -1,15 +1,22 @@
 {
   "dependencies": {
-    "@types/jest": "^24.0.19",
+    "@types/chai": "^4.2.4",
+    "@types/isomorphic-fetch": "0.0.35",
+    "@types/jest": "^24.0.20",
     "@types/node": "^12.11.5",
+    "@types/node-fetch": "^2.5.2",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
     "aws-lambda": "^0.1.2",
+    "chai": "^4.2.0",
+    "cross-fetch": "^3.0.4",
+    "es6-promise": "^4.2.8",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.1",
+    "isomorphic-fetch": "^2.2.1",
     "jest": "^24.9.0",
     "lambda-local": "^1.6.3",
     "node-fetch": "^2.6.0",
@@ -24,7 +31,12 @@
     "build": "tsc",
     "lint": "eslint --ext=.ts src",
     "test": "jest",
-    "test:lambda": "yarn build && lambda-local -l ./dist/index.js -e ./dist/mock-events/default -h stuffGet"
+    "test:lambda": "yarn build && lambda-local -l ./dist/index.js -e ./dist/mock-events/default -h stuffGet",
+    "test:fetch": "yarn build && lambda-local -l ./dist/index.js -e ./dist/mock-events/default -h fetchGet"
   },
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "devDependencies": {
+    "fetch-mock": "^8.0.0-alpha.11",
+    "nock": "^11.6.0"
+  }
 }

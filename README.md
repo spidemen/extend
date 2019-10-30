@@ -1,3 +1,36 @@
+#  Description 
+- Setup    
+1.  git clone https://github.com/spidemen/extend.git   
+2.  run command: 
+```bash  
+    cd extend/lambda-scaffold    
+    git fetch --all      
+    git checkout develop   
+    yarn   
+  ```   
+- simple to get all breeds, just rum    
+```bash
+    yarn test:fetch    
+  ``` 
+- run test cases    
+  ```bash   
+    yarn test   
+    ``` 
+- detail about code  
+  breed-get.js  file contain a class which handle  all the logics of requirement    
+  1. fetchhandler() mostly  handle  API call and fetch stuff, get data from server , address timeout and expection   
+  2. handlebreed()  mostly  handle  how to deal with breeds. Basic on requirements, there are some cases need to handle:    
+    breeds without subbreed, just put them into a string list and return  ex: {sheep:[],dog:[]}-->[sheep,dog]       
+    breed with subbreed, use space separator  concat breeds and his subbreeed  ex: {sheep:['dog','cat'],wolf:[]}-->['dog sheep','cat sheep','cat']      
+  (this case may not a need)  breed with embedded subbreed, recursive to get all result..     
+   ex: {sheep:[{dog:['cat,monkey']},'cat'],wolf:[]}-->['cat dog sheep','monkey dog sheep',  'cat sheep','wolf']      
+
+
+  breed-get.test.ts     test file: there lots of test case for above two functions:   
+   1.  fetchhandler()  timeout test, fetch timout test, happy path or bad path test, etc   
+   2.  implememt nock to mock fetch API call locally and then test  fetchhandler()  functions with lots of different cases  like  single breed   subbreeds  
+    empty and incorrect input data and so on.   
+    
 # The Extend Challenge
 
 This is bare-bones version of our backend codebase, where we ask candidates to make a small contribution. The goal: give both the candidate and the Extend team a chance to interact on a realistic, but limited (shooting for just a few hours), task. We see this as a two-way evaluation, for the team and the candidate to decide if its a good fit.
