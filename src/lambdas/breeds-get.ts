@@ -24,9 +24,6 @@ export class FetchHandler {
 
     let statuscode = 499
     const res = new Set()
-    if (this.context !== undefined) {
-      this.context.context.callbackWaitsForEmptyEventLoop = false
-    }
     await fetch(this.url, { method: 'GET', timeout: this.timeout })
       .then((resp: any) => {
         statuscode = resp.status
@@ -41,10 +38,6 @@ export class FetchHandler {
         } else if (this.context !== undefined) {
           console.log('Remaining time: ', this.context.context.getRemainingTimeInMillis())
           if (this.context.context.getRemainingTimeInMillis() < 500) {
-            // this.callback({
-            //   statuscode: 504,
-            //   body: ['timeout error, server busy, please try again'],
-            // })
             statuscode = 504
             throw new Error('timeout error, server busy, please try again')
           }
@@ -61,7 +54,7 @@ export class FetchHandler {
 
     return {
       statusCode: statuscode,
-      //  body: Array.from(res.values()),  // paul make a change, no need for body
+      body: Array.from(res.values()), // paul make a change, no need for body
     }
   }
 

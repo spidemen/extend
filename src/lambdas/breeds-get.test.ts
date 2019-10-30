@@ -33,10 +33,10 @@ describe('breeds-get FetchHandler', () => {
     nock(domain)
       .get(endpoint)
       .reply(200, { message: { sheep: [] }, status: 'success' })
-    //  const expected = ['sheep']
+    const expected = ['sheep']
     const result = await hanlderBreed.fetchhandler()
     expect(result.statusCode).toEqual(200)
-    // expect(result.body).toEqual(expected)
+    expect(result.body).toEqual(expected)
   })
 
   it('wrong url test', async () => {
@@ -47,7 +47,7 @@ describe('breeds-get FetchHandler', () => {
       .reply(404, input)
     const result = await fetchhandlertmp.fetchhandler()
     expect(result.statusCode).toEqual(404) // 404 not found
-    //  expect(result.body.length).toEqual(1) // length 1 just store error message
+    expect(result.body.length).toEqual(1) // length 1 just store error message
   })
 
   it('server timeout both head and body test', async () => {
@@ -64,7 +64,7 @@ describe('breeds-get FetchHandler', () => {
     nock(domain)
       .get(endpoint)
       .reply(200, { message: {}, status: 'success' })
-    // const expected: string[] = []
+    const expected: string[] = []
     const result = await hanlderBreed.fetchhandler()
     expect(result.statusCode).toEqual(200)
     // expect(result.body).toEqual(expected)
@@ -76,8 +76,8 @@ describe('breeds-get FetchHandler', () => {
       .get(endpoint)
       .reply(200, inputJSON)
     const result = await hanlderBreed.fetchhandler()
-    //  const expected = ['sheep', 'cat', 'dog']
-    //  expect(result.body).toEqual(expected)
+    const expected = ['sheep', 'cat', 'dog']
+    expect(result.body).toEqual(expected)
     expect(result.statusCode).toEqual(200)
   })
 
@@ -95,8 +95,8 @@ describe('breeds-get FetchHandler', () => {
       .get(endpoint)
       .reply(200, input)
     const result = await hanlderBreed.fetchhandler()
-    //  const expected = ['lion sheep', 'shark sheep', 'cat', 'ox dog', 'wolf dog']
-    //  expect(result.body).toEqual(expected)
+    const expected = ['lion sheep', 'shark sheep', 'cat', 'ox dog', 'wolf dog']
+    expect(result.body).toEqual(expected)
     expect(result.statusCode).toEqual(200)
   })
 
@@ -113,8 +113,8 @@ describe('breeds-get FetchHandler', () => {
       .get(endpoint)
       .reply(200, input)
     const result = await hanlderBreed.fetchhandler()
-    //   const expected = ['dog lion sheep', 'cat lion sheep', 'shark sheep', 'cat']
-    // expect(result.body).toEqual(expected)
+    const expected = ['dog lion sheep', 'cat lion sheep', 'shark sheep', 'cat']
+    expect(result.body).toEqual(expected)
     expect(result.statusCode).toEqual(200)
   })
 
@@ -131,14 +131,14 @@ describe('breeds-get FetchHandler', () => {
       .get(endpoint)
       .reply(200, input)
     const result = await hanlderBreed.fetchhandler()
-    // const expected = [
-    //   'wolf cat lion sheep',
-    //   'dog lion sheep',
-    //   'cat lion sheep',
-    //   'shark sheep',
-    //   'cat',
-    // ]
-    //  expect(result.body).toEqual(expected)
+    const expected = [
+      'wolf cat lion sheep',
+      'dog lion sheep',
+      'cat lion sheep',
+      'shark sheep',
+      'cat',
+    ]
+    expect(result.body).toEqual(expected)
     expect(result.statusCode).toEqual(200)
   })
 
@@ -149,38 +149,8 @@ describe('breeds-get FetchHandler', () => {
       .get(endpoint)
       .reply(200, input)
     const result = await hanlderBreed.fetchhandler()
-    //   const expected: string[] = []
-    //  expect(result.body).toEqual(expected)
+    const expected: string[] = []
+    expect(result.body).toEqual(expected)
     expect(result.statusCode).toEqual(200)
   })
-
-  // it('lambdas timeout test', async () => {
-  //   const hanlderBreedtimeout = new FetchHandler(`${domain}${endpoint}`, 3000) // FIXME: need another para context, but cannot pass here
-  //   nock(domain).get(endpoint)
-  //   .delay({head:1500,body:2600})
-  //   .reply(201, { message: { sheep: [] }, status: 'success' })
-  //   const result = await hanlderBreedtimeout.fetchhandler()
-  //   console.log(result);
-  //   expect(result.statusCode).toEqual(201) // 499 fetch timeout
-  //   expect(result.body[0]).toMatch('error')
-  // })
-
-  // // // test hanlderBreed class
-  // const fetchhandler = jest.fn();
-  // jest.mock('./breeds-get', () => {
-  //     return jest.fn().mockImplementation(() => {
-  //         return { fetchhanlders: FetchHandler };
-  //     });
-  // });
-
-  // beforeEach(() => {
-  //     // Clear all instances and calls to constructor and all methods:
-  //     fetchhandler.mockClear();
-  // });
-
-  // it('check contructor create??', () => {
-  //     const hanlde = new FetchHandler(url);
-  //     // Ensure constructor created the object
-  //     expect(fetchhandler).toBeTruthy();
-  // });
 })
